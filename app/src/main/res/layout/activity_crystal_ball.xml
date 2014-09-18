@@ -8,17 +8,17 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/ball01"
         android:background="#000"
+        android:id="@+id/animation"
         />
 
     <TextView
         android:id="@+id/answerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#ffffff"
+        android:textColor="#c7c7c7"
         android:layout_centerInParent="true"
-        android:textSize="100px"
+        android:textSize="75px"
         android:textStyle="bold"
         android:gravity="center"
         />

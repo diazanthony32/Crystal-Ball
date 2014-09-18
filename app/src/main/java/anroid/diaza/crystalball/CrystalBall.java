@@ -3,6 +3,7 @@ package anroid.diaza.crystalball;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -10,6 +11,9 @@ import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.FloatMath;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,16 +41,36 @@ public class CrystalBall extends Activity {
             float delta = currentAcceleration - previousAcceleration;
             acceleration = acceleration * 0.9f + delta;
 
-            if(acceleration > 15){
-                Toast toast = Toast.makeText(getApplication(), "Device has Shaken", Toast.LENGTH_SHORT);
-                toast.show();
+            final ImageView img = (ImageView)findViewById(R.id.animation);
+            img.setBackgroundResource(R.drawable.animation);
 
-                MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.crystal_ball);
+             final AnimationDrawable animation = (AnimationDrawable)img.getBackground();
+
+            // Plays the Crystal Ball tune after shake
+            MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.crystal_ball);
+
+            if(acceleration > 10){
+
                 mediaPlayer.start();
 
+                if (animation.isRunning()){
+                    animation.stop();
+                    animation.start();
+
+                }
+                else{
+                    animation.start();
+                }
+
+                // Gets the prediction
                 answerText = (TextView) findViewById(R.id.answerText);
                 answerText.setText(Predictions.get().getPredictions());
+
+                // Plays the fade in animation of the prediction
+                answerText.startAnimation(AnimationUtils.loadAnimation(CrystalBall.this, android.R.anim.fade_in));
+
             }
+
         }
 
         @Override
@@ -66,6 +90,7 @@ public class CrystalBall extends Activity {
         ActionBar actionBar = getActionBar();
         actionBar.hide();
 
+        // This is what listens for and allows us to know when the device is shaken
         sensorManager = (SensorManager)getSystemService (Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
