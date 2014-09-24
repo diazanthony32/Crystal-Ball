@@ -27,5 +27,6 @@
     <item android:drawable="@drawable/ball22" android:duration="70"></item>
     <item android:drawable="@drawable/ball23" android:duration="70"></item>
     <item android:drawable="@drawable/ball24" android:duration="70"></item>
+    <item android:drawable="@drawable/ball01" android:duration="0"></item>
 
 </animation-list>

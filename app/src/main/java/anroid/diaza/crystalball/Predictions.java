@@ -8,15 +8,22 @@ public class Predictions {
     private String[] answers;
 
     private Predictions() {
+
         // The selection of random predictions the app shall "predict"
         answers = new String[] {
-            "Your wishes will come true",
-            "Your wishes will NEVER come true.",
-            "Your mama said so...",
-            "That's what She said"
+            "Your Wishes Will Come True",
+            "Your Wishes Will NEVER Come True",
+            "Only If you Believe So",
+            "Only If you Try",
+            "No, Just No",
+            "You Don't Need That",
+            "Ask Your Mother",
+            "Don't Ask Me I'm Just A Ball"
+
         };
     }
 
+    //checks if the predictions variable is set to null
     public static Predictions get(){
         if(predictions == null){
             predictions = new Predictions();
@@ -27,9 +34,10 @@ public class Predictions {
     // Sends back the "prediction" to the CrystalBall.java
     public String getPredictions() {
 
+        //Generates a random number to select an answer from
         Random prediction = new Random();
 
-        return answers[prediction.nextInt(4)];
+        return answers[prediction.nextInt(8)];
     }
 
 }
