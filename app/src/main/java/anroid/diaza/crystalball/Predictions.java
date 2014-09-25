@@ -18,7 +18,21 @@ public class Predictions {
             "No, Just No",
             "You Don't Need That",
             "Ask Your Mother",
-            "Don't Ask Me I'm Just A Ball"
+            "Don't Ask Me I'm Just A Ball",
+            "I Don't Know",
+            "To Answer That I would Need .99 cents",
+            "Why Not?",
+            "42",
+            "21",
+            "Maybe...",
+            "That Question Is Too Difficult For Me",
+            "Why You Gotta And Make Things So Complicated",
+            "IDK",
+            "Well, That's All I Got",
+            "No, I Wont Help You",
+            "Id Rather Not Answer That",
+            "Find Out For Yourself",
+            "IDC"
 
         };
     }
@@ -37,7 +51,7 @@ public class Predictions {
         //Generates a random number to select an answer from
         Random prediction = new Random();
 
-        return answers[prediction.nextInt(8)];
+        return answers[prediction.nextInt(22)];
     }
 
 }

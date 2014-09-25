@@ -16,6 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import java.util.Calendar;
+
+
 public class CrystalBall extends Activity {
 
     private TextView answerText;
@@ -23,16 +26,32 @@ public class CrystalBall extends Activity {
     private SensorManager sensorManager;
     private Sensor accelerometer;
 
+    // Variables for the determining of the shake
     private float acceleration;
     private float currentAcceleration;
     private float previousAcceleration;
 
+    // Variables for the determining of the delay
+    long currentTime;
+    long previousTime;
+    long delay;
+    long elapsed;
+
+
     private final SensorEventListener sensorListener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent event) {
+
             float x = event.values[0];
             float y = event.values[1];
             float z = event.values[2];
+
+            // Sets the delay count
+            previousTime = currentTime;
+            currentTime = System.currentTimeMillis();
+            elapsed = currentTime - previousTime;
+            delay = delay + elapsed;
+
 
             //checks if the phone if shaking using math n' stuff
             previousAcceleration = currentAcceleration;
@@ -46,27 +65,28 @@ public class CrystalBall extends Activity {
 
             final AnimationDrawable animation = (AnimationDrawable)img.getBackground();
 
-            if(acceleration > 10){
+            // Checks if the Time Has Passed and if the Device has shaken
+            if(acceleration > 10 && delay >= 4500) {
 
                 // Plays the Crystal Ball tune after shake
                 final MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.crystal_ball);
                 mediaPlayer.start();
 
                 //Checks if the animation is running, stops it and starts it again
-                if (animation.isRunning()){
+                if (animation.isRunning()) {
 
                     animation.stop();
                     animation.start();
                 }
 
                 //If previous if statement is false it starts up the animation
-                else{
+                else {
                     animation.start();
 
                 }
 
                 //Time it takes(in milliseconds) for the Text to appear
-                new CountDownTimer(1600, 1000) {
+                new CountDownTimer(1700, 1000) {
 
                     public void onTick(long millisUntilFinished) {
                     }
@@ -106,16 +126,19 @@ public class CrystalBall extends Activity {
                                         answerText.setText("");
 
                                     }
-                                  //Starts the Countdown timer of the text being set to blank
+                                    //Starts the Countdown timer of the text being set to blank
                                 }.start();
 
                             }
-                          //Starts the countdown timer for the text to fade away
+                            //Starts the countdown timer for the text to fade away
                         }.start();
 
                     }
-                  //Starts the countdown time for the text to appear
+                    //Starts the countdown time for the text to appear
                 }.start();
+
+                // Resets the delay to 0
+                delay = 0;
 
             }
 
@@ -135,6 +158,11 @@ public class CrystalBall extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crystal_ball);
+
+        // This sets up for the use of delay
+        delay = 5000;
+        previousTime = System.currentTimeMillis();
+        currentTime = System.currentTimeMillis();
 
         // This is what listens for and allows us to know when the device is shaken
         sensorManager = (SensorManager)getSystemService (Context.SENSOR_SERVICE);
