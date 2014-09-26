@@ -16,9 +16,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import java.util.Calendar;
-
-
 public class CrystalBall extends Activity {
 
     private TextView answerText;
@@ -65,12 +62,24 @@ public class CrystalBall extends Activity {
 
             final AnimationDrawable animation = (AnimationDrawable)img.getBackground();
 
-            // Checks if the Time Has Passed and if the Device has shaken
-            if(acceleration > 10 && delay >= 4500) {
+            // Gets the prediction
+            answerText = (TextView) findViewById(R.id.answerText);
 
-                // Plays the Crystal Ball tune after shake
-                final MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.crystal_ball);
-                mediaPlayer.start();
+            if(delay > 15000){
+
+                answerText.setText("Don't Forget To Shake");
+                answerText.startAnimation(AnimationUtils.loadAnimation(CrystalBall.this, android.R.anim.fade_out));
+
+            }
+
+            // Checks if the Time Has Passed and if the Device has shaken
+            if(acceleration > 10 && delay >= 4300) {
+
+                answerText.setText("");
+
+                // Plays the Mario Jump tune after shake
+                final MediaPlayer jump = MediaPlayer.create(getApplicationContext(), R.raw.jumping);
+                jump.start();
 
                 //Checks if the animation is running, stops it and starts it again
                 if (animation.isRunning()) {
@@ -85,8 +94,8 @@ public class CrystalBall extends Activity {
 
                 }
 
-                //Time it takes(in milliseconds) for the Text to appear
-                new CountDownTimer(1700, 1000) {
+                //Time it takes(in milliseconds) for the The block sound to play
+                new CountDownTimer(400, 1000) {
 
                     public void onTick(long millisUntilFinished) {
                     }
@@ -94,8 +103,28 @@ public class CrystalBall extends Activity {
                     //If the timer is done counting down it does the following
                     public void onFinish() {
 
+                        // Plays the bump sound after 0.4 sec
+                        final MediaPlayer bump = MediaPlayer.create(getApplicationContext(), R.raw.bump);
+                        bump.start();
+
+                    }
+                    //Starts the Countdown timer of the text being set to blank
+                }.start();
+
+                //Time it takes(in milliseconds) for the Text to appear
+                new CountDownTimer(1600, 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+                    }
+
+                    //If the timer is done counting down it does the following
+                    public void onFinish() {
+
+                        // Plays the Opening tune during text appears
+                        final MediaPlayer open = MediaPlayer.create(getApplicationContext(), R.raw.open);
+                        open.start();
+
                         // Gets the prediction
-                        answerText = (TextView) findViewById(R.id.answerText);
                         answerText.setText(Predictions.get().getPredictions());
 
                         // Plays the fade in animation of the prediction
@@ -160,9 +189,12 @@ public class CrystalBall extends Activity {
         setContentView(R.layout.activity_crystal_ball);
 
         // This sets up for the use of delay
-        delay = 5000;
+        delay = 4500;
         previousTime = System.currentTimeMillis();
         currentTime = System.currentTimeMillis();
+
+        answerText = (TextView) findViewById(R.id.answerText);
+        answerText.setText("(Shake For Prediction)");
 
         // This is what listens for and allows us to know when the device is shaken
         sensorManager = (SensorManager)getSystemService (Context.SENSOR_SERVICE);

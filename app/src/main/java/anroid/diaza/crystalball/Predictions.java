@@ -11,28 +11,26 @@ public class Predictions {
 
         // The selection of random predictions the app shall "predict"
         answers = new String[] {
-            "Your Wishes Will Come True",
-            "Your Wishes Will NEVER Come True",
             "Only If you Believe So",
             "Only If you Try",
             "No, Just No",
             "You Don't Need That",
             "Ask Your Mother",
-            "Don't Ask Me I'm Just A Ball",
+            "Don't Ask Me I'm Just A Plumber",
             "I Don't Know",
-            "To Answer That I would Need .99 cents",
+            "Oh, No",
             "Why Not?",
-            "42",
-            "21",
+            "Check The Other Castle",
+            "Ask Luigi...",
             "Maybe...",
             "That Question Is Too Difficult For Me",
-            "Why You Gotta And Make Things So Complicated",
-            "IDK",
+            "First Help Me Find Peach",
+            "My Stache Says Yes",
             "Well, That's All I Got",
             "No, I Wont Help You",
             "Id Rather Not Answer That",
             "Find Out For Yourself",
-            "IDC"
+            "Its A Me, Mario"
 
         };
     }
